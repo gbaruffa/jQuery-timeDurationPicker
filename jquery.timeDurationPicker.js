@@ -1,5 +1,5 @@
 /*!
- * jQuery TimeDurationPicker Plugin v1.0.5
+ * jQuery TimeDurationPicker Plugin v1.1.0
  *
  * https://github.com/digaev/jQuery-timeDurationPicker
  *
@@ -193,6 +193,9 @@
         if (this.options.defaultValue) {
           this.setDuration(this.options.defaultValue);
         }
+        if (this.options.defaultHumanValue) {
+          this.setDurationHuman(this.options.defaultHumanValue);
+        }
     },
     _createSelectWithOptions: function(min, max) {
         var select = $('<select />')
@@ -251,6 +254,52 @@
     getYears: function() {
       return parseInt(this._content.years.val());
     },
+    setDurationHuman: function(value) {
+	  //console.log(value);
+      if (this.options.years) {
+	    var re = /\d+Y/i;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.years.val(parseInt(found[0]));
+		}
+      }
+      if (this.options.months) {
+	    var re = /\d+M/;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.months.val(parseInt(found[0]));
+		}
+      }
+      if (this.options.days) {
+	    var re = /\d+d/i;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.days.val(parseInt(found[0]));
+		}
+      }
+      if (this.options.hours) {
+	    var re = /\d+h/;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.hours.val(parseInt(found[0]));
+		}
+      }
+      if (this.options.minutes) {
+	    var re = /\d+m/;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.minutes.val(parseInt(found[0]));
+		}
+      }
+      if (this.options.seconds) {
+	    var re = /\d+s/i;
+	    var found = value.match(re);
+		if (found) {
+		  this._content.seconds.val(parseInt(found[0]));
+		}
+      }
+	  return true;
+	},
     setDuration: function(value) {
       value = parseInt(value);
       if (isNaN(value)) {
@@ -331,29 +380,37 @@
       var duration = '';
 
       if (this.options.years && this.getYears() > 0) {
-        units.push({value: this.getYears(), name: this._tr('human_years')});
+        //units.push({value: this.getYears(), name: this._tr('human_years')});
+        units.push({value: this.getYears(), name: 'Y'});
       }
       if (this.options.months && this.getMonths() > 0) {
-        units.push({value: this.getMonths(), name: this._tr('human_months')});
+        //units.push({value: this.getMonths(), name: this._tr('human_months')});
+        units.push({value: this.getMonths(), name: 'M'});
       }
       if (this.options.days && this.getDays() > 0) {
-        units.push({value: this.getDays(), name: this._tr('human_days')});
+        //units.push({value: this.getDays(), name: this._tr('human_days')});
+        units.push({value: this.getDays(), name: 'd'});
       }
       if (this.options.hours && this.getHours() > 0) {
-        units.push({value: this.getHours(), name: this._tr('human_hours')});
+        //units.push({value: this.getHours(), name: this._tr('human_hours')});
+        units.push({value: this.getHours(), name: 'h'});
       }
       if (this.options.minutes && this.getMinutes() > 0) {
-        units.push({value: this.getMinutes(), name: this._tr('human_minutes')});
+        //units.push({value: this.getMinutes(), name: this._tr('human_minutes')});
+        units.push({value: this.getMinutes(), name: 'm'});
       }
       if (this.options.seconds && this.getSeconds() > 0) {
-        units.push({value: this.getSeconds(), name: this._tr('human_seconds')});
+        //units.push({value: this.getSeconds(), name: this._tr('human_seconds')});
+        units.push({value: this.getSeconds(), name: 's'});
       }
 
       for (var i = 0, l = units.length; i < l; ++i) {
         var unit = units[i];
-        var separator = i == l - 1 ? '' : (i == l - 2 ? ' ' + this._tr('and') + ' ' : ', ');
+        //var separator = i == l - 1 ? '' : (i == l - 2 ? ' ' + this._tr('and') + ' ' : ', ');
+        var separator = ' ';
 
-        duration += unit.value + ' ' + unit.name + separator;
+        //duration += unit.value + ' ' + unit.name + separator;
+        duration += unit.value + unit.name + separator;
       }
       return duration;
     }
